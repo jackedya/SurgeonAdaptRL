@@ -1,0 +1,75 @@
+data:
+  root: data
+  image_height: 224
+  image_width: 224
+  window: 30
+  stride: 5
+  horizon: 15
+  phases: 10
+  instruments: 19
+  fps: 30
+  detector_frames: 3500
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  test_fraction: 0.15
+  workers: 32
+  prefetch_factor: 8
+policy:
+  hidden: 512
+  heads: 8
+  encoder_layers: 6
+  decoder_layers: 4
+  feedforward: 2048
+  adapter_bottleneck: 64
+  adapter_scale: 0.1
+  spatial_bins: 256
+  displacement_min: -0.05
+  displacement_max: 0.05
+  dropout: 0.1
+  visual_features: 2048
+  position_features: 2
+primitives:
+  feature_dim: 3
+  latent_dim: 32
+  hidden_dim: 128
+  tcn_layers: 8
+  tcn_kernel: 5
+  minimum_components: 4
+  maximum_components: 12
+  beta: 0.1
+style:
+  velocity_weight: 0.25
+  acceleration_weight: 0.20
+  trajectory_weight: 0.30
+  phase_weight: 0.25
+  velocity_scale: 0.05
+  trajectory_scale: 0.02
+  loss_weight: 0.3
+safety:
+  maximum_velocity_mm_s: 15.0
+  maximum_force_mn: 30.0
+  minimum_clearance_mm: 0.2
+  policy_learning_rate: 0.0003
+  dual_learning_rate: 0.001
+  refinement_iterations: 100000
+  discount: 0.99
+train:
+  batch_size: 256
+  world_size: 4
+  gradient_accumulation: 1
+  pretrain_epochs: 200
+  meta_iterations: 50000
+  adaptation_steps: 200
+  learning_rate: 0.0003
+  inner_learning_rate: 0.01
+  outer_learning_rate: 0.0003
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  precision: bf16
+  optimizer: adamw
+  scheduler: cosine
+  warmup_steps: 0
+  seeds: [13, 29, 47, 71, 101]
+  save_every: 1000
+output: runs/main
+variant: full

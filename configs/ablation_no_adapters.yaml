@@ -1,0 +1,3 @@
+variant: no_adapters
+disabled_components: [adapter_modules]
+source: table_7

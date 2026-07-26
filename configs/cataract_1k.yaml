@@ -1,0 +1,7 @@
+variant: cataract_1k
+dataset: cataract_1k_phase_subset
+videos: 56
+surgeons: 9
+resolution: [540, 960]
+fps: 25
+source: table_3

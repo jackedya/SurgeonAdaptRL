@@ -1,0 +1,3 @@
+variant: no_meta
+disabled_components: [meta_learning]
+source: table_7

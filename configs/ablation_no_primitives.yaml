@@ -1,0 +1,3 @@
+variant: no_primitives
+disabled_components: [skill_primitives]
+source: table_7
