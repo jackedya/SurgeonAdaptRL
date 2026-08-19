@@ -1,14 +1,15 @@
 data:
   root: data
+  # Engineering defaults; the paper does not report resize or temporal sampling settings.
   image_height: 224
   image_width: 224
   window: 30
   stride: 5
-  horizon: 15
+  horizon: 16
   phases: 10
   instruments: 19
   fps: 30
-  detector_frames: 3500
+  detector_frames: 0
   train_fraction: 0.70
   validation_fraction: 0.15
   test_fraction: 0.15
@@ -28,6 +29,7 @@ policy:
   dropout: 0.1
   visual_features: 2048
   position_features: 2
+  imagenet_pretrained: true
 primitives:
   feature_dim: 3
   latent_dim: 32
@@ -54,6 +56,7 @@ safety:
   refinement_iterations: 100000
   discount: 0.99
 train:
+  # The paper reports batch size 256 but does not state per-device or global scope.
   batch_size: 256
   world_size: 4
   gradient_accumulation: 1
@@ -64,6 +67,7 @@ train:
   inner_learning_rate: 0.01
   outer_learning_rate: 0.0003
   weight_decay: 0.01
+  # Precision, clipping, scheduler, warmup, and seed values are engineering defaults.
   gradient_clip: 1.0
   precision: bf16
   optimizer: adamw
@@ -73,3 +77,28 @@ train:
   save_every: 1000
 output: runs/main
 variant: full
+provenance:
+  reported:
+    framework: PyTorch 2.0
+    hardware: 4 NVIDIA A100 80GB GPUs
+    epochs: 200
+    batch_size: 256
+    optimizer: AdamW
+    learning_rate: 0.0003
+    weight_decay: 0.01
+    meta_iterations: 50000
+    inner_learning_rate: 0.01
+    outer_learning_rate: 0.0003
+    adaptation_steps: 200
+    safety_iterations: 100000
+    evaluation_seeds: 5
+  engineering_defaults:
+    - image_height
+    - image_width
+    - window
+    - stride
+    - precision
+    - scheduler
+    - warmup_steps
+    - gradient_clip
+    - seed_values

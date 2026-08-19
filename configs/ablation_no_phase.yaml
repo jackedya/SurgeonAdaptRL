@@ -1,3 +1,4 @@
+base: main.yaml
 variant: no_phase
 disabled_components: [phase_conditioning]
-source: table_7
+source: table_5

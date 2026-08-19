@@ -1,3 +1,4 @@
+base: main.yaml
 variant: video_il
 disabled_components: [simulation_refinement]
-source: table_7
+source: table_5

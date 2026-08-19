@@ -1,0 +1,8 @@
+CATARACTS
+https://cataracts.grand-challenge.org/Data/
+
+CaDIS
+https://cataracts-semantic-segmentation2020.grand-challenge.org/Data/
+
+Cataract-1K
+https://github.com/Negin-Ghamsarian/Cataract-1K

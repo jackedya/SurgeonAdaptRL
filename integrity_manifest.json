@@ -1,0 +1,296 @@
+{
+  "code_lines": 4859,
+  "file_count": 48,
+  "files": [
+    {
+      "bytes": 75,
+      "lines": 9,
+      "path": ".gitignore",
+      "sha256": "9ccdd644a7d100ddd67e2b2b81b9c0027ba7eceb2063db1e52e53e80064de5bf"
+    },
+    {
+      "bytes": 387,
+      "lines": 9,
+      "path": "Dockerfile",
+      "sha256": "e98d4e76677ac7f87f70d2f8646d32aef5f607cc67ba3a02823c1fbfddfd2bea"
+    },
+    {
+      "bytes": 1045,
+      "lines": 7,
+      "path": "LICENSE",
+      "sha256": "697a12ddd57dcf75a691532dfbd8856dc8a41aab2d3f5f54db0d4411423acfee"
+    },
+    {
+      "bytes": 5306,
+      "lines": 70,
+      "path": "README.md",
+      "sha256": "d03762f519823540b6ea371a973c602f44402468df851988048bb5415c3f5afb"
+    },
+    {
+      "bytes": 9100,
+      "lines": 187,
+      "path": "claim_to_code.json",
+      "sha256": "f56421b7d6e3430000cf91eb56cfd9667dc44eec1bd977b4921e997eeeb11aea"
+    },
+    {
+      "bytes": 252,
+      "lines": 6,
+      "path": "code/surgeonadaptrl/__init__.py",
+      "sha256": "a9579a987b238d9b7be05bdc16cf1257f0e236c855c7e20c4ce342ea62fec2a7"
+    },
+    {
+      "bytes": 11611,
+      "lines": 284,
+      "path": "code/surgeonadaptrl/baselines.py",
+      "sha256": "be11008085be12411b38465c184916b6b1a2ecfa30dd9efab79b937531d6219c"
+    },
+    {
+      "bytes": 8380,
+      "lines": 233,
+      "path": "code/surgeonadaptrl/checkpointing.py",
+      "sha256": "bd3f6eba02236831eabc91ffad56da8d0a4e9cd76c09b68a9a0563399b36f54e"
+    },
+    {
+      "bytes": 1112,
+      "lines": 34,
+      "path": "code/surgeonadaptrl/cli.py",
+      "sha256": "488186d2bff2081279007afc7a44bd28f5defc5a77fc02fba77928c3b4757f41"
+    },
+    {
+      "bytes": 5197,
+      "lines": 162,
+      "path": "code/surgeonadaptrl/configuration.py",
+      "sha256": "cce010b4abada415317b7141a0cb5e38d30c44cf59cf6ee64e3643d0d6800d90"
+    },
+    {
+      "bytes": 4694,
+      "lines": 143,
+      "path": "code/surgeonadaptrl/data.py",
+      "sha256": "2f1d7ec3ee5216d50f17f7d5b982e5c00533f59c4ec781b8262d24c1716d8381"
+    },
+    {
+      "bytes": 2464,
+      "lines": 82,
+      "path": "code/surgeonadaptrl/evaluation.py",
+      "sha256": "85f7211c7868bbf989a46b2d1822eb6af4c08645fbb215704f93a3e605b16d56"
+    },
+    {
+      "bytes": 11643,
+      "lines": 300,
+      "path": "code/surgeonadaptrl/manifests.py",
+      "sha256": "e0c8cc9d0e0e8b5512b62d182934a1c928f05e232bd68f5af573d24acc0d9d65"
+    },
+    {
+      "bytes": 12253,
+      "lines": 298,
+      "path": "code/surgeonadaptrl/meta_learning.py",
+      "sha256": "811fc0278796dbb455b70ebbd8dc6d7548d0b6f58afacc763d35fed5c603ae78"
+    },
+    {
+      "bytes": 12209,
+      "lines": 298,
+      "path": "code/surgeonadaptrl/phase.py",
+      "sha256": "27af550b345b98e5fa499ea03066d8d629cf3af132ffec04781934d850fcb1e5"
+    },
+    {
+      "bytes": 7139,
+      "lines": 175,
+      "path": "code/surgeonadaptrl/policy.py",
+      "sha256": "e2cc139a5acc6b91a5a87a5877e55bc9052ebb7a3f706d1b4a924e49b1aac383"
+    },
+    {
+      "bytes": 7741,
+      "lines": 191,
+      "path": "code/surgeonadaptrl/primitives.py",
+      "sha256": "57e6afefd9846ac74cef629f3dddbac4c2acd198781c7b9f76a24bf78cccab7d"
+    },
+    {
+      "bytes": 3132,
+      "lines": 105,
+      "path": "code/surgeonadaptrl/runtime.py",
+      "sha256": "80c7fb402ddccaa2d190fb1623c7b876e31b257fa1ba9802d2f10a0ce3dfaf2b"
+    },
+    {
+      "bytes": 3958,
+      "lines": 128,
+      "path": "code/surgeonadaptrl/safety.py",
+      "sha256": "fa18227bf30a4f3706dc983e68fc784bdaa9ed9aa3fe97180cfab32ab3b5f7d3"
+    },
+    {
+      "bytes": 7965,
+      "lines": 206,
+      "path": "code/surgeonadaptrl/statistics.py",
+      "sha256": "eab75c7afb6e299b81c028c54eeed339694d484363a3975420944904225b3a12"
+    },
+    {
+      "bytes": 5214,
+      "lines": 142,
+      "path": "code/surgeonadaptrl/style.py",
+      "sha256": "3ed2bf4a68c5aa2f09d0b41fd1fcdffeff087ce66d842b6c05106a66131e75b0"
+    },
+    {
+      "bytes": 7678,
+      "lines": 198,
+      "path": "code/surgeonadaptrl/tracking.py",
+      "sha256": "a157d6cb30b66e91c6e5793b9a8e8f545db2535205edcabca37d2cced22705e1"
+    },
+    {
+      "bytes": 10464,
+      "lines": 270,
+      "path": "code/surgeonadaptrl/training.py",
+      "sha256": "4d2b55db1333a6408191eb1fa53977a04e9b76c711b7fb9449f33f43e08dd846"
+    },
+    {
+      "bytes": 13659,
+      "lines": 349,
+      "path": "code/surgeonadaptrl/trajectory.py",
+      "sha256": "7781f7831138101a2307be41baee38406a96d4776a97e1dc6f7faf40306c6f7d"
+    },
+    {
+      "bytes": 18250,
+      "lines": 411,
+      "path": "code/surgeonadaptrl/verification.py",
+      "sha256": "904c21aa4f156376118a7aab917b4e5561fddfc2983e20d328ac8d16c70e25f6"
+    },
+    {
+      "bytes": 92,
+      "lines": 4,
+      "path": "configs/ablation_no_adapters.yaml",
+      "sha256": "1401b3e98b9fe5104463f562239534ec153a0ea3baf1b7626bea0dab1d57a3dd"
+    },
+    {
+      "bytes": 86,
+      "lines": 4,
+      "path": "configs/ablation_no_meta.yaml",
+      "sha256": "aa9aab8350a78546d0d3f54a4ad0bc86d7a85fda6fbf7e5ee444ea15975280b4"
+    },
+    {
+      "bytes": 92,
+      "lines": 4,
+      "path": "configs/ablation_no_phase.yaml",
+      "sha256": "7a9f6d2161a9a23b2994e377fe7ea8b99e34dffccd948e3df50413155a142be7"
+    },
+    {
+      "bytes": 95,
+      "lines": 4,
+      "path": "configs/ablation_no_primitives.yaml",
+      "sha256": "08e252811c79826d280ad4b8983631ab32b1d466d5cc84fc9dbb9517efa108a2"
+    },
+    {
+      "bytes": 93,
+      "lines": 4,
+      "path": "configs/ablation_no_safety.yaml",
+      "sha256": "fbde6bc16c74103658e52da1674167f97c23b93a769129c15394b99b84a1490e"
+    },
+    {
+      "bytes": 89,
+      "lines": 4,
+      "path": "configs/ablation_sim_rl.yaml",
+      "sha256": "cc3c4c97f783691432f2cd311becea0e9bf150b8da0a5df5bfd61bf876d264dd"
+    },
+    {
+      "bytes": 95,
+      "lines": 4,
+      "path": "configs/ablation_video_il.yaml",
+      "sha256": "ad73e5e69a8a168f5e1ddd04f2eec2847d94375ba7252e32977331aaa261a0e1"
+    },
+    {
+      "bytes": 152,
+      "lines": 7,
+      "path": "configs/cadis_extraction.yaml",
+      "sha256": "09d588004ff69871d340387c47a87217b976ff7c00a09924394701cb66dda726"
+    },
+    {
+      "bytes": 141,
+      "lines": 8,
+      "path": "configs/cataract_1k.yaml",
+      "sha256": "5dde0431ada277692b83f8931a1947d0b332c705b5a42c2156b67ac9a5621b64"
+    },
+    {
+      "bytes": 2317,
+      "lines": 104,
+      "path": "configs/main.yaml",
+      "sha256": "4a8853accf0f4b389194ac719945be9a9fe78fced424c78e8fbeed93de81114f"
+    },
+    {
+      "bytes": 192,
+      "lines": 8,
+      "path": "dataset_urls.txt",
+      "sha256": "9519cc232f8241bc4f4380bb169a4468b9bb37948d3537a0c380f05d34a51fea"
+    },
+    {
+      "bytes": 316,
+      "lines": 18,
+      "path": "environment.yml",
+      "sha256": "ddcb1ff700e4d40fed96d93f2e1deb6c1696f469e055f1ae0cab8ada8ae3520a"
+    },
+    {
+      "bytes": 629,
+      "lines": 34,
+      "path": "pyproject.toml",
+      "sha256": "6ac8417a3e65fcc3c896a301fc839074c0a1f4d999cd6923dac1ec4d2049c532"
+    },
+    {
+      "bytes": 151,
+      "lines": 9,
+      "path": "requirements.txt",
+      "sha256": "49baebd2fb734d9edc570763030c169c5a304b8bedf92a80251e92de32c400af"
+    },
+    {
+      "bytes": 1707,
+      "lines": 55,
+      "path": "scripts/build_integrity_manifest.py",
+      "sha256": "e24a2222d8abe718f6a0b78da6f264d035af3f22727a904ef5037a752dae408c"
+    },
+    {
+      "bytes": 3635,
+      "lines": 114,
+      "path": "tests/test_checkpointing.py",
+      "sha256": "cdfa7bab0dc485af4a6be5307ee94d99baf5301780ac8a59d89a228f79868a19"
+    },
+    {
+      "bytes": 2945,
+      "lines": 79,
+      "path": "tests/test_configuration.py",
+      "sha256": "911d3c04dd334bde9e599cd09f8b812a9001c79f1cd0a2df869d813fb6e650b9"
+    },
+    {
+      "bytes": 4760,
+      "lines": 136,
+      "path": "tests/test_manifests.py",
+      "sha256": "630e568a373d28327cc0cc4fa4402197ba813d2a0d0b586f2a44ee3012c25c0a"
+    },
+    {
+      "bytes": 4705,
+      "lines": 136,
+      "path": "tests/test_phase.py",
+      "sha256": "6074d74b081dc12808b4b36ffd3e14a417c7e289189eab932b0b0b0a103f8694"
+    },
+    {
+      "bytes": 3541,
+      "lines": 107,
+      "path": "tests/test_statistics.py",
+      "sha256": "fc13e38e57e7287559623ccb4f0be6850f0430eabcefecbfa2c908d780b4f26e"
+    },
+    {
+      "bytes": 5252,
+      "lines": 139,
+      "path": "tests/test_trajectory.py",
+      "sha256": "5a42668f3d07ccf723c0e4be7457c468ca2855e1ed07195d42bce12108d9121a"
+    },
+    {
+      "bytes": 2610,
+      "lines": 78,
+      "path": "tests/test_verification.py",
+      "sha256": "8f70fa1b7fe8fd461cd819cd224f09db6108038552b2a7a7785e278150b48cd5"
+    },
+    {
+      "bytes": 3393,
+      "lines": 136,
+      "path": "verification_report.json",
+      "sha256": "1c97853917a4cb9b2c2eab96ccbc89d52606ff1787090384103b091d0b3e461b"
+    }
+  ],
+  "project_status": "PARTIALLY_VERIFIED",
+  "schema_version": 1
+}

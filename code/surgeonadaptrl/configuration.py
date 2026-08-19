@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +41,10 @@ class PolicyConfig:
     dropout: float = 0.1
     visual_features: int = 2048
     position_features: int = 2
+    imagenet_pretrained: bool = True
+    adapters_enabled: bool = True
+    phase_conditioning_enabled: bool = True
+    primitive_conditioning_enabled: bool = True
 
 
 @dataclass(frozen=True)
@@ -108,18 +112,51 @@ class ExperimentConfig:
     train: TrainConfig = field(default_factory=TrainConfig)
     output: str = "runs/main"
     variant: str = "full"
+    disabled_components: tuple[str, ...] = ()
+
+    @staticmethod
+    def _merge(base: dict[str, Any], update: dict[str, Any]) -> dict[str, Any]:
+        merged = dict(base)
+        for key, value in update.items():
+            if isinstance(value, dict) and isinstance(merged.get(key), dict):
+                merged[key] = ExperimentConfig._merge(merged[key], value)
+            else:
+                merged[key] = value
+        return merged
+
+    @classmethod
+    def _read_values(cls, path: Path, seen: set[Path]) -> dict[str, Any]:
+        resolved = path.resolve()
+        if resolved in seen:
+            raise ValueError("configuration inheritance contains a cycle")
+        seen.add(resolved)
+        with resolved.open("r", encoding="utf-8") as stream:
+            values: dict[str, Any] = yaml.safe_load(stream) or {}
+        base_name = values.pop("base", None)
+        if base_name is None:
+            return values
+        base_values = cls._read_values(resolved.parent / str(base_name), seen)
+        return cls._merge(base_values, values)
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> ExperimentConfig:
-        with Path(path).open("r", encoding="utf-8") as stream:
-            values: dict[str, Any] = yaml.safe_load(stream)
+        values = cls._read_values(Path(path), set())
+        disabled = tuple(str(value) for value in values.get("disabled_components", ()))
+        policy = PolicyConfig(**values.get("policy", {}))
+        policy = replace(
+            policy,
+            adapters_enabled="adapter_modules" not in disabled,
+            phase_conditioning_enabled="phase_conditioning" not in disabled,
+            primitive_conditioning_enabled="skill_primitives" not in disabled,
+        )
         return cls(
             data=DataConfig(**values.get("data", {})),
-            policy=PolicyConfig(**values.get("policy", {})),
+            policy=policy,
             primitives=PrimitiveConfig(**values.get("primitives", {})),
             style=StyleConfig(**values.get("style", {})),
             safety=SafetyConfig(**values.get("safety", {})),
             train=TrainConfig(**values.get("train", {})),
             output=values.get("output", "runs/main"),
             variant=values.get("variant", "full"),
+            disabled_components=disabled,
         )

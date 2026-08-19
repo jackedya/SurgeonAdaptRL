@@ -3,4 +3,5 @@ dataset: cadis
 frames: 4670
 videos: 25
 purpose: segmentation_guided_trajectory_extraction
-source: section_iii_g
+source: section_3_7
+base: main.yaml

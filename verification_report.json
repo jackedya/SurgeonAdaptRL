@@ -1,0 +1,136 @@
+{
+  "blocked": 0,
+  "checks": [
+    {
+      "detail": "batch decoded and validated",
+      "evidence": {
+        "features": [
+          4,
+          8,
+          6
+        ],
+        "future": [
+          4,
+          4,
+          2
+        ],
+        "phase": [
+          4
+        ],
+        "positions": [
+          4,
+          8,
+          2
+        ]
+      },
+      "name": "data_reading",
+      "status": "PASS"
+    },
+    {
+      "detail": "velocity, acceleration, and curvature match analytic trajectory",
+      "evidence": {
+        "expected_speed": 0.022360679774997897,
+        "speed": 0.022360679774997904
+      },
+      "name": "motion_formulas",
+      "status": "PASS"
+    },
+    {
+      "detail": "policy, adapter, trajectory loss, style loss, phase loss, backward pass, and update completed",
+      "evidence": {
+        "gradient_norm": 7.975985050201416,
+        "parameter_change": 0.2138589471578598,
+        "phase_loss": 1.1486278772354126,
+        "style_loss": 0.19233185052871704,
+        "total_loss": 6.85078239440918,
+        "trajectory_loss": 5.6444549560546875
+      },
+      "name": "science_core_training_path",
+      "status": "PASS"
+    },
+    {
+      "detail": "independent shape and finiteness checks passed",
+      "evidence": {
+        "phase_shape": [
+          4,
+          4
+        ],
+        "trajectory_shape": [
+          4,
+          4,
+          2
+        ]
+      },
+      "name": "forward_propagation",
+      "status": "PASS"
+    },
+    {
+      "detail": "loss, backward pass, and parameter update completed",
+      "evidence": {
+        "gradient_norm": 0.36665523052215576,
+        "loss": 0.1596900224685669,
+        "parameter_change": 0.17033717036247253
+      },
+      "name": "loss_backward_update",
+      "status": "PASS"
+    },
+    {
+      "detail": "atomic save and exact load completed",
+      "evidence": {
+        "sha256": "f60540f56785f0494f4e651be182479452c0384f7eddb28840736a9b007ae5bb"
+      },
+      "name": "checkpoint_roundtrip",
+      "status": "PASS"
+    },
+    {
+      "detail": "independent training loop reduced the fixed-batch loss",
+      "evidence": {
+        "final_loss": 0.000280697422567755,
+        "initial_loss": 0.211846262216568,
+        "ratio": 0.00132500531107224,
+        "steps": 80
+      },
+      "name": "single_batch_overfit",
+      "status": "PASS"
+    },
+    {
+      "detail": "official video archives and the reported four-GPU compute target are not present",
+      "evidence": {},
+      "name": "full_dataset_training",
+      "status": "NOT_RUN"
+    },
+    {
+      "detail": "the AMBF simulator and surgical scene assets are not present",
+      "evidence": {},
+      "name": "ambf_safety_refinement",
+      "status": "NOT_RUN"
+    },
+    {
+      "detail": "reported tables require complete datasets and five full training seeds",
+      "evidence": {},
+      "name": "reported_metric_reproduction",
+      "status": "NOT_RUN"
+    }
+  ],
+  "failed": 0,
+  "not_run": 3,
+  "passed": 7,
+  "status": "PARTIALLY_VERIFIED",
+  "tooling_checks": [
+    {
+      "detail": "74 tests completed",
+      "name": "pytest",
+      "status": "PASS"
+    },
+    {
+      "detail": "all configured lint checks completed",
+      "name": "ruff",
+      "status": "PASS"
+    },
+    {
+      "detail": "strict type checking reported 79 errors in 13 files",
+      "name": "mypy_strict",
+      "status": "FAIL"
+    }
+  ]
+}

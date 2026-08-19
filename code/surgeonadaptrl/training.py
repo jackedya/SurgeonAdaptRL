@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 import logging
 from dataclasses import dataclass
 from pathlib import Path
@@ -8,14 +7,13 @@ from typing import Iterable
 
 import torch
 from torch import Tensor, nn
-from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
 
 from .configuration import ExperimentConfig
 from .data import SurgicalSequenceDataset, quantize_displacements
 from .policy import PolicyOutput, SurgeonPolicy
 from .runtime import DistributedContext, atomic_save, capture_state, reduce_mean, set_seed
-from .safety import DualVariables, PrimalDualObjective, Simulation, constraint_costs
+from .safety import DualVariables, PrimalDualObjective, Simulation
 from .style import SurgeonStyleFidelity
 
 
@@ -48,7 +46,7 @@ def calculate_loss(
     output: PolicyOutput,
     future: Tensor,
     current: Tensor,
-    phases: Tensor,
+    future_phases: Tensor,
     config: ExperimentConfig,
     style_metric: SurgeonStyleFidelity,
 ) -> BatchLoss:
@@ -66,13 +64,15 @@ def calculate_loss(
         config.policy.displacement_max,
     )
     predicted = current[:, -1:] + torch.cumsum(predicted_displacement, dim=1)
+    if output.phase_logits.shape[:2] != future_phases.shape:
+        raise ValueError("phase predictions must align with the future trajectory")
     predicted_phase = output.phase_logits.argmax(dim=-1)
     style_values = [
-        style_metric.loss(predicted[index], future[index], predicted_phase[index], phases[index])
+        style_metric.loss(predicted[index], future[index], predicted_phase[index], future_phases[index])
         for index in range(predicted.size(0))
     ]
     style = torch.stack(style_values).mean()
-    phase = torch.nn.functional.cross_entropy(output.phase_logits.flatten(0, 1), phases.flatten())
+    phase = torch.nn.functional.cross_entropy(output.phase_logits.flatten(0, 1), future_phases.flatten())
     total = trajectory + config.style.loss_weight * style + phase
     return BatchLoss(total, trajectory, style, phase)
 
@@ -127,7 +127,7 @@ class BasePolicyTrainer:
                 output,
                 values["future"],
                 values["positions"],
-                values["phases"],
+                values["future_phases"],
                 self.config,
                 self.style,
             )
@@ -175,7 +175,7 @@ class MetaTrainer:
         output = self.model(
             values["frames"],
             values["positions"],
-            values["phases"],
+            values["future_phases"],
             primitive_seed(values["phases"]),
             decoder_seed(values["positions"], horizon),
             surgeon,

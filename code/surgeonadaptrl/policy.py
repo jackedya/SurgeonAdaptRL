@@ -66,16 +66,17 @@ class AdaptedEncoderLayer(nn.Module):
         attended, _ = self.attention(values, values, values, need_weights=False)
         values = self.first_norm(values + self.first_dropout(attended))
         values = self.second_norm(values + self.second_dropout(self.feedforward(values)))
-        if surgeon is not None:
+        if surgeon is not None and self.config.adapters_enabled:
             self.add_surgeon(surgeon)
             values = self.adapters[surgeon](values)
         return values
 
 
 class VisualEncoder(nn.Module):
-    def __init__(self, hidden: int) -> None:
+    def __init__(self, hidden: int, imagenet_pretrained: bool = True) -> None:
         super().__init__()
-        backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        weights = ResNet50_Weights.IMAGENET1K_V2 if imagenet_pretrained else None
+        backbone = resnet50(weights=weights)
         self.features = nn.Sequential(*list(backbone.children())[:-1])
         self.projection = nn.Linear(2048, hidden)
 
@@ -106,7 +107,7 @@ class SurgeonPolicy(nn.Module):
     def __init__(self, config: PolicyConfig, phases: int = 10, primitives: int = 12) -> None:
         super().__init__()
         self.config = config
-        self.visual = VisualEncoder(config.hidden)
+        self.visual = VisualEncoder(config.hidden, config.imagenet_pretrained)
         self.position = PositionEncoder(config.hidden)
         self.temporal = PositionEncoding(config.hidden)
         self.phase_embedding = nn.Embedding(phases, config.hidden)
@@ -148,8 +149,10 @@ class SurgeonPolicy(nn.Module):
     ) -> Tensor:
         values = self.visual(frames)
         values = values + self.position(positions)
-        values = values + self.phase_embedding(phases)
-        values = values + self.primitive_embedding(primitive_indices)
+        if self.config.phase_conditioning_enabled:
+            values = values + self.phase_embedding(phases)
+        if self.config.primitive_conditioning_enabled:
+            values = values + self.primitive_embedding(primitive_indices)
         values = self.temporal(values)
         for layer in self.encoders:
             values = layer(values, surgeon)
@@ -169,4 +172,4 @@ class SurgeonPolicy(nn.Module):
         length = targets.size(1)
         mask = torch.triu(torch.full((length, length), float("-inf"), device=targets.device), diagonal=1)
         hidden = self.decoder(targets, memory, tgt_mask=mask)
-        return PolicyOutput(self.x_head(hidden), self.y_head(hidden), self.phase_head(memory), hidden)
+        return PolicyOutput(self.x_head(hidden), self.y_head(hidden), self.phase_head(hidden), hidden)

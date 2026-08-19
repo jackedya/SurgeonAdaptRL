@@ -103,8 +103,16 @@ class SurgicalSequenceDataset(Dataset[dict[str, Tensor]]):
         positions = torch.tensor([[item.x, item.y] for item in sequence.frames], dtype=torch.float32)
         future = torch.tensor([[item.x, item.y] for item in sequence.future], dtype=torch.float32)
         phases = torch.tensor([item.phase for item in sequence.frames], dtype=torch.long)
+        future_phases = torch.tensor([item.phase for item in sequence.future], dtype=torch.long)
         surgeon = torch.tensor(sequence.frames[0].surgeon, dtype=torch.long)
-        return {"frames": frames, "positions": positions, "future": future, "phases": phases, "surgeon": surgeon}
+        return {
+            "frames": frames,
+            "positions": positions,
+            "future": future,
+            "phases": phases,
+            "future_phases": future_phases,
+            "surgeon": surgeon,
+        }
 
 
 def read_tracking_json(path: str | Path) -> Iterator[FrameRecord]:

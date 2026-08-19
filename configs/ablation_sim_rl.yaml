@@ -1,3 +1,4 @@
+base: main.yaml
 variant: sim_rl
 disabled_components: [video_pretraining]
-source: table_7
+source: table_5

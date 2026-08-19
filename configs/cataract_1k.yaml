@@ -4,4 +4,5 @@ videos: 56
 surgeons: 9
 resolution: [540, 960]
 fps: 25
-source: table_3
+source: table_2
+base: main.yaml

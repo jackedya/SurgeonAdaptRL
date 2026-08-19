@@ -1,3 +1,4 @@
+base: main.yaml
 variant: no_safety
 disabled_components: [safety_constraints]
-source: table_7
+source: table_5

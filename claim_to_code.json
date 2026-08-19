@@ -1,0 +1,187 @@
+{
+  "paper_title": "Personalized surgical style modeling via meta-reinforcement and imitation learning for ophthalmic video analysis",
+  "project": "SurgeonAdaptRL_Personalized_Surgical_Style_Modeling",
+  "supplementary_material": "none_found",
+  "framework": {
+    "value": "PyTorch 2.0",
+    "paper_location": "Section 3.9",
+    "code": ["pyproject.toml", "requirements.txt", "environment.yml"]
+  },
+  "claims": [
+    {
+      "id": "eq_1",
+      "paper_location": "Section 3.1, Equation 1",
+      "claim": "Surgeon-specific parameters minimize adaptation loss on limited demonstrations.",
+      "code": ["code/surgeonadaptrl/meta_learning.py:AdapterOptimizer", "code/surgeonadaptrl/training.py:MetaTrainer.adapt"]
+    },
+    {
+      "id": "eq_2",
+      "paper_location": "Section 3.1, Equation 2",
+      "claim": "Expected cumulative safety costs are bounded by constraint tolerances.",
+      "code": ["code/surgeonadaptrl/safety.py:PrimalDualObjective", "code/surgeonadaptrl/safety.py:constraint_costs"]
+    },
+    {
+      "id": "eq_3",
+      "paper_location": "Section 3.2, Equation 3",
+      "claim": "Base and surgeon-residual logits define the personalized policy.",
+      "code": ["code/surgeonadaptrl/policy.py:AdaptedEncoderLayer", "code/surgeonadaptrl/policy.py:SurgeonPolicy"]
+    },
+    {
+      "id": "eq_4",
+      "paper_location": "Section 3.2, Equation 4",
+      "claim": "A scaled bottleneck adapter is inserted as a residual update.",
+      "code": ["code/surgeonadaptrl/policy.py:ResidualAdapter"]
+    },
+    {
+      "id": "eq_5",
+      "paper_location": "Section 3.2, Equation 5",
+      "claim": "Meta loss combines trajectory and style terms with style weight 0.3.",
+      "code": ["code/surgeonadaptrl/training.py:calculate_loss", "code/surgeonadaptrl/configuration.py:StyleConfig"]
+    },
+    {
+      "id": "eq_6",
+      "paper_location": "Section 3.3, Equation 6",
+      "claim": "Velocity, acceleration, and curvature are extracted from normalized trajectories.",
+      "code": ["code/surgeonadaptrl/trajectory.py:motion_features", "code/surgeonadaptrl/primitives.py:motion_features"]
+    },
+    {
+      "id": "eq_7",
+      "paper_location": "Section 3.3, Equation 7",
+      "claim": "The primitive encoder produces a diagonal Gaussian latent distribution of dimension 32.",
+      "code": ["code/surgeonadaptrl/primitives.py:PrimitiveVAE.encode", "code/surgeonadaptrl/configuration.py:PrimitiveConfig"]
+    },
+    {
+      "id": "eq_8",
+      "paper_location": "Section 3.3, Equation 8",
+      "claim": "The VAE objective combines reconstruction and KL terms with beta 0.1.",
+      "code": ["code/surgeonadaptrl/primitives.py:PrimitiveVAE.loss"]
+    },
+    {
+      "id": "eq_9",
+      "paper_location": "Section 3.3, Equation 9",
+      "claim": "Surgeon-specific primitive mixture weights are softmax-normalized logits.",
+      "code": ["code/surgeonadaptrl/primitives.py:PrimitiveLibrary.probabilities"]
+    },
+    {
+      "id": "eq_10",
+      "paper_location": "Section 3.4, Equation 10",
+      "claim": "Velocity cost is excess infinity-norm speed above 15 mm/s.",
+      "code": ["code/surgeonadaptrl/safety.py:velocity_cost", "code/surgeonadaptrl/configuration.py:SafetyConfig"]
+    },
+    {
+      "id": "eq_11",
+      "paper_location": "Section 3.4, Equation 11",
+      "claim": "Force cost is excess contact-force norm above 30 mN.",
+      "code": ["code/surgeonadaptrl/safety.py:force_cost"]
+    },
+    {
+      "id": "eq_12",
+      "paper_location": "Section 3.4, Equation 12",
+      "claim": "Clearance cost penalizes distances below 0.2 mm.",
+      "code": ["code/surgeonadaptrl/safety.py:clearance_cost"]
+    },
+    {
+      "id": "eq_13",
+      "paper_location": "Section 3.4, Equation 13",
+      "claim": "Primal-dual optimization alternates policy and nonnegative dual updates.",
+      "code": ["code/surgeonadaptrl/safety.py:DualVariables", "code/surgeonadaptrl/training.py:SafetyRefiner.update"]
+    },
+    {
+      "id": "eq_14",
+      "paper_location": "Section 3.5, Equation 14",
+      "claim": "SSF weights velocity, acceleration, geometry, and phase timing by 0.25, 0.20, 0.30, and 0.25.",
+      "code": ["code/surgeonadaptrl/style.py:SurgeonStyleFidelity.compare", "code/surgeonadaptrl/configuration.py:StyleConfig"]
+    },
+    {
+      "id": "eq_15",
+      "paper_location": "Section 3.5, Equation 15",
+      "claim": "Velocity similarity is exponential negative DTW with scale 0.05.",
+      "code": ["code/surgeonadaptrl/style.py:dynamic_time_warping", "code/surgeonadaptrl/style.py:SurgeonStyleFidelity.compare"]
+    },
+    {
+      "id": "eq_16",
+      "paper_location": "Section 3.5, Equation 16",
+      "claim": "Trajectory similarity is exponential negative discrete Frechet distance with scale 0.02.",
+      "code": ["code/surgeonadaptrl/style.py:discrete_frechet", "code/surgeonadaptrl/style.py:SurgeonStyleFidelity.compare"]
+    },
+    {
+      "id": "eq_17",
+      "paper_location": "Section 3.5, Equation 17",
+      "claim": "Phase timing similarity is clamped to the unit interval.",
+      "code": ["code/surgeonadaptrl/style.py:phase_similarity", "code/surgeonadaptrl/phase.py:phase_similarity"]
+    },
+    {
+      "id": "algorithm_1",
+      "paper_location": "Section 3.6, Algorithm 1",
+      "claim": "Training has base pretraining, support-query meta-learning, and simulation-only safety refinement stages.",
+      "code": ["code/surgeonadaptrl/training.py:BasePolicyTrainer", "code/surgeonadaptrl/training.py:MetaTrainer", "code/surgeonadaptrl/training.py:SafetyRefiner"]
+    },
+    {
+      "id": "architecture",
+      "paper_location": "Section 3.2 and Figure 1",
+      "claim": "ResNet-50 feeds a six-layer width-512 eight-head encoder and four-layer causal decoder with 64-dimensional adapters and horizon 16.",
+      "code": ["code/surgeonadaptrl/policy.py:SurgeonPolicy", "code/surgeonadaptrl/configuration.py:PolicyConfig", "configs/main.yaml"]
+    },
+    {
+      "id": "phase_tcn",
+      "paper_location": "Section 3.3",
+      "claim": "Phase classification uses an eight-layer temporal convolutional network with kernel size five.",
+      "code": ["code/surgeonadaptrl/phase.py:TemporalPhaseClassifier", "code/surgeonadaptrl/primitives.py:PhaseClassifier"]
+    },
+    {
+      "id": "primitive_clustering",
+      "paper_location": "Section 3.3",
+      "claim": "Per-phase Gaussian mixture count is selected by BIC from 4 through 12.",
+      "code": ["code/surgeonadaptrl/primitives.py:PrimitiveLibrary.fit_phase"]
+    },
+    {
+      "id": "data_protocol",
+      "paper_location": "Section 3.7",
+      "claim": "CATARACTS uses its 25/25 split; CaDIS is extraction-only; Cataract-1K uses 56 phase-annotated videos.",
+      "code": ["code/surgeonadaptrl/manifests.py:official_cataracts_partition", "code/surgeonadaptrl/manifests.py:assert_cadis_not_independent", "configs/cataract_1k.yaml", "configs/cadis_extraction.yaml"]
+    },
+    {
+      "id": "statistics",
+      "paper_location": "Section 3.9",
+      "claim": "Five-seed continuous comparisons use paired t-tests, categorical comparisons use McNemar tests, and families use Bonferroni correction.",
+      "code": ["code/surgeonadaptrl/statistics.py:paired_t_test", "code/surgeonadaptrl/statistics.py:mcnemar_test", "code/surgeonadaptrl/statistics.py:bonferroni_all"]
+    },
+    {
+      "id": "training_settings",
+      "paper_location": "Section 3.9",
+      "claim": "Four A100 80GB GPUs, 200 epochs, batch 256, AdamW, learning rate 3e-4, weight decay 0.01, 50000 meta iterations, 200 adaptation updates, and 100000 refinement iterations.",
+      "code": ["configs/main.yaml", "code/surgeonadaptrl/configuration.py:TrainConfig", "code/surgeonadaptrl/configuration.py:SafetyConfig"]
+    }
+  ],
+  "reported_tables": [
+    {"table": 1, "scope": "CATARACTS main comparison", "executable_result_embedded": false},
+    {"table": 2, "scope": "Cataract-1K comparison", "executable_result_embedded": false},
+    {"table": 3, "scope": "phase-wise CATARACTS NTE", "executable_result_embedded": false},
+    {"table": 4, "scope": "few-shot demonstration counts", "executable_result_embedded": false},
+    {"table": 5, "scope": "seven component ablations", "executable_result_embedded": false}
+  ],
+  "source_discrepancies": [
+    {
+      "field": "Cataract-1K phase-subset resolution and frame rate",
+      "paper": "540 x 960 at 25 fps",
+      "official_source": "1024 x 768 at 30 fps",
+      "resolution": "Preserve the paper claim for manuscript traceability and document the official-source discrepancy; do not silently transform either value."
+    },
+    {
+      "field": "batch size scope",
+      "paper": "batch size 256 on four GPUs; global/per-device scope unstated",
+      "resolution": "Configuration preserves 256 and explicitly leaves effective batch size unresolved."
+    }
+  ],
+  "engineering_defaults_not_reported": [
+    "image resize 224 x 224",
+    "observation window 30",
+    "stride 5",
+    "precision bf16",
+    "cosine scheduler",
+    "zero warmup steps",
+    "gradient clipping 1.0",
+    "specific seed values",
+    "256 displacement bins and displacement range"
+  ]
+}

@@ -14,36 +14,40 @@ from .primitives import acceleration, velocity
 def dynamic_time_warping(first: Tensor, second: Tensor) -> Tensor:
     rows = first.numel() + 1
     columns = second.numel() + 1
-    matrix = torch.full((rows, columns), float("inf"), device=first.device, dtype=first.dtype)
-    matrix[0, 0] = 0.0
+    zero = first.new_zeros(())
+    infinity = first.new_full((), float("inf"))
+    previous = [zero, *[infinity for _ in range(columns - 1)]]
     for row in range(1, rows):
+        current = [infinity]
         for column in range(1, columns):
             cost = torch.abs(first[row - 1] - second[column - 1])
-            matrix[row, column] = cost + torch.min(
-                torch.stack((matrix[row - 1, column], matrix[row, column - 1], matrix[row - 1, column - 1]))
-            )
-    return matrix[-1, -1]
+            current.append(cost + torch.min(torch.stack((previous[column], current[column - 1], previous[column - 1]))))
+        previous = current
+    return previous[-1]
 
 
 def discrete_frechet(first: Tensor, second: Tensor) -> Tensor:
     rows = first.size(0)
     columns = second.size(0)
-    matrix = torch.full((rows, columns), -1.0, device=first.device, dtype=first.dtype)
+    previous: list[Tensor] = []
     for row in range(rows):
+        current: list[Tensor] = []
         for column in range(columns):
             distance = torch.linalg.vector_norm(first[row] - second[column])
             if row == 0 and column == 0:
-                matrix[row, column] = distance
+                value = distance
             elif row == 0:
-                matrix[row, column] = torch.maximum(matrix[row, column - 1], distance)
+                value = torch.maximum(current[column - 1], distance)
             elif column == 0:
-                matrix[row, column] = torch.maximum(matrix[row - 1, column], distance)
+                value = torch.maximum(previous[column], distance)
             else:
-                previous = torch.min(
-                    torch.stack((matrix[row - 1, column], matrix[row - 1, column - 1], matrix[row, column - 1]))
+                preceding = torch.min(
+                    torch.stack((previous[column], previous[column - 1], current[column - 1]))
                 )
-                matrix[row, column] = torch.maximum(previous, distance)
-    return matrix[-1, -1]
+                value = torch.maximum(preceding, distance)
+            current.append(value)
+        previous = current
+    return previous[-1]
 
 
 def phase_durations(phases: Tensor, count: int) -> Tensor:
